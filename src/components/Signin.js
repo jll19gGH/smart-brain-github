@@ -1,4 +1,5 @@
 import React from 'react';
+import Alert from '@mui/material/Alert'
 
 class Signin extends React.Component {
 
@@ -18,8 +19,15 @@ class Signin extends React.Component {
 		this.setState({signInPassword: event.target.value});
 	}
 
+	wrongCredentials = () => {
+		console.log("wrongCredentials");
+	}
+
+	fieldsBlank = () => {
+		console.log("fieldsBlank");
+	}
+
 	onSubmitSignIn = () => {
-		console.log(this.state);
 		fetch('https://smart-brain-api-5loe.onrender.com/signin', {
 			method: 'post',
 			headers: {'Content-Type': 'application/json'},
@@ -35,6 +43,20 @@ class Signin extends React.Component {
 				this.props.loadUser(user);
 				this.props.onRouteChange('home');
 			}
+			else if(user === 'Field(s) left blank')
+				{
+					//this.fieldsBlank();
+					//return (
+						//<Alert severity="error">This is an error alert — check it out!</Alert>
+						//);
+				}
+			else if(user === 'Wrong credentials')
+				{
+					//this.wrongCredentials();
+					//return (
+						//<Alert severity="error">This is an error alert — check it out!</Alert>
+						//);
+				}
 		})
 		.catch(console.log);
 	}

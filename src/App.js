@@ -41,12 +41,6 @@ class App extends React.Component {
     }})
   }
 
-  //componentDidMount() {
-  //  fetch('http://localhost:3000')
-  //    .then(response => response.json())
-  //    .then(data => console.log(data))
-  //} 
-
   calculateFaceLocation = (data) => {
       const clarifaiFace = data.outputs[0].data.regions[0].region_info.bounding_box;
       const image = document.getElementById('inputImage');
@@ -62,7 +56,6 @@ class App extends React.Component {
   }
 
   displayFaceBox = (box) => {
-    console.log(box);
     this.setState({box: box});
   }
 
@@ -83,8 +76,6 @@ class App extends React.Component {
       })
       .then(response => response.json())
       .then(response => {
-
-        console.log(response.status.code);
         if (response.status.code === 10000) {
           fetch('https://smart-brain-api-5loe.onrender.com/image', {
             method: 'put',
@@ -101,7 +92,7 @@ class App extends React.Component {
         }
         this.displayFaceBox(this.calculateFaceLocation(response));
       })
-      .catch(err => console.log(err));
+      .catch(console.log)
       }
     }
 
@@ -113,14 +104,9 @@ class App extends React.Component {
       this.setState({isSignedIn: true});
     }
     this.setState({route: route});
-    console.log("-----STATE-----\n");
-    console.log(this.state);
-    console.log("\n---------------\n");
-
   }
 
   render() {
-    //const {isSignedIn, imageUrl, route, box} = this.state;
     if(this.state.route === 'signin' || this.state.route === 'signout')
     {
       return (
